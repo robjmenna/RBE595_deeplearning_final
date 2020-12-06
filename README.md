@@ -1,4 +1,4 @@
-# RBE595_deeplearning_final
+# RBE595 Deep Learning Final
 
 Deep Learning for Robot Perception Final
 
