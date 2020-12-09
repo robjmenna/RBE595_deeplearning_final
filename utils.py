@@ -1,13 +1,39 @@
 import tensorflow as tf
 from tensorflow import keras
 import requests
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D
+from tensorflow.keras.layers import MaxPooling2D
+from tensorflow.keras.layers import Flatten
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import Dense
 
 def imagenetlabels():
     """Download the list of labels of the imagenet dataset"""
     label_url = 'https://storage.googleapis.com/download.tensorflow.org/data/ImageNetLabels.txt'
     blob = requests.get(label_url).text.split('\n')
-    labels = [str(line) for line in blob]
+    labels = [str(line) for line in blob[1:]]
     return labels
+
+def create_model():
+    model = Sequential()
+    # model.add(Conv2D(256, 3, input_shape=(224,224,3), activation="relu", padding="same"))
+    # model.add(Conv2D(256, 3, activation="relu", padding="same"))
+    # model.add(MaxPooling2D())
+    # model.add(Conv2D(128, 3, activation="relu", padding="same"))
+    # model.add(Conv2D(128, 3, activation="relu", padding="same"))
+    # model.add(MaxPooling2D())
+    # model.add(Conv2D(64, 3, activation="relu", padding="same"))
+    # model.add(Conv2D(64, 3, activation="relu", padding="same"))
+    # model.add(MaxPooling2D())
+    # model.add(Flatten())
+    model.add(Dense(500, activation="relu"))
+    model.add(Dense(500, activation="relu"))
+    model.add(Dense(10, activation="softmax"))
+    model.compile(
+        optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"]
+    )
+    return model
 
 class Distiller(keras.Model):
     def __init__(self, student, teacher):
