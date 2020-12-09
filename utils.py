@@ -17,16 +17,16 @@ def imagenetlabels():
 
 def create_model():
     model = Sequential()
-    # model.add(Conv2D(256, 3, input_shape=(224,224,3), activation="relu", padding="same"))
-    # model.add(Conv2D(256, 3, activation="relu", padding="same"))
-    # model.add(MaxPooling2D())
-    # model.add(Conv2D(128, 3, activation="relu", padding="same"))
-    # model.add(Conv2D(128, 3, activation="relu", padding="same"))
-    # model.add(MaxPooling2D())
-    # model.add(Conv2D(64, 3, activation="relu", padding="same"))
-    # model.add(Conv2D(64, 3, activation="relu", padding="same"))
-    # model.add(MaxPooling2D())
-    # model.add(Flatten())
+    model.add(Conv2D(256, 3, input_shape=(224,224,3), activation="relu", padding="same"))
+    model.add(Conv2D(256, 3, activation="relu", padding="same"))
+    model.add(MaxPooling2D())
+    model.add(Conv2D(128, 3, activation="relu", padding="same"))
+    model.add(Conv2D(128, 3, activation="relu", padding="same"))
+    model.add(MaxPooling2D())
+    model.add(Conv2D(64, 3, activation="relu", padding="same"))
+    model.add(Conv2D(64, 3, activation="relu", padding="same"))
+    model.add(MaxPooling2D())
+    model.add(Flatten())
     model.add(Dense(500, activation="relu"))
     model.add(Dense(500, activation="relu"))
     model.add(Dense(10, activation="softmax"))
@@ -36,6 +36,7 @@ def create_model():
     return model
 
 class Distiller(keras.Model):
+    """Distiller example from https://keras.io/examples/vision/knowledge_distillation/"""
     def __init__(self, student, teacher):
         super(Distiller, self).__init__()
         self.teacher = teacher
