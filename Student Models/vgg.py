@@ -11,26 +11,22 @@ from tensorflow import keras
 from tensorflow.keras import layers
 import matplotlib.pyplot as plt
 
-from keras.models import Sequential
-from keras.layers import Conv2D, MaxPooling2D
-from keras.layers import Activation, Dropout, Flatten, Dense 
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D
+from tensorflow.keras.layers import Activation, Dropout, Flatten, Dense 
 
-from keras.preprocessing.image import ImageDataGenerator
-from keras.preprocessing.image import load_img
-from keras.preprocessing.image import img_to_array
 from numpy import expand_dims
-from keras.applications.resnet50 import preprocess_input
-from keras.layers import GaussianNoise
+from tensorflow.keras.applications.resnet50 import preprocess_input
+from tensorflow.keras.layers import GaussianNoise
 
-# 
 
 #Define CNN Model
 def vgg_model():
     model = Sequential([
       #Standardize Dataset
-      layers.experimental.preprocessing.Rescaling((1./255), input_shape=(64, 64, 3)),
+      # layers.experimental.preprocessing.Rescaling((1./255), input_shape=(64, 64, 3)),
       #Add a layer of Gaussian Noise
-      layers.Conv2D(64, 1, activation='relu'),
+      layers.Conv2D(64, 1, input_shape=[224,224,3], activation='relu'),
       layers.Conv2D(64, 1, activation='relu'),
       layers.MaxPooling2D(),
       layers.Conv2D(128, 1, activation='relu'),
@@ -47,7 +43,7 @@ def vgg_model():
       layers.Flatten(),
       layers.Dense(128, activation='relu'),
       layers.Dense(64, activation='relu'),
-      layers.Dense(8, activation='softmax') ])
+      layers.Dense(1000) ])
     model.compile(optimizer='adam', loss=tf.keras.losses.CategoricalCrossentropy(), metrics=['accuracy'])
     return model
 
