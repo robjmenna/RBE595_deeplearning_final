@@ -26,7 +26,7 @@ def vgg_model():
       #Standardize Dataset
       # layers.experimental.preprocessing.Rescaling((1./255), input_shape=(64, 64, 3)),
       #Add a layer of Gaussian Noise
-      layers.Conv2D(64, 1, input_shape=[224,224,3], activation='relu'),
+      layers.Conv2D(64, 1, input_shape=[32,32,3], activation='relu'),
       layers.Conv2D(64, 1, activation='relu'),
       layers.MaxPooling2D(),
       layers.Conv2D(128, 1, activation='relu'),
@@ -41,14 +41,13 @@ def vgg_model():
       layers.Conv2D(512, 1, activation='relu'),
       layers.MaxPooling2D(),
       layers.Flatten(),
-      layers.Dense(128, activation='relu'),
-      layers.Dense(64, activation='relu'),
-      layers.Dense(1001) ])
-    model.compile(optimizer='adam', loss=tf.keras.losses.CategoricalCrossentropy(), metrics=['accuracy'])
+      layers.Dense(512, activation='relu'),
+      layers.Dense(512, activation='relu'),
+      layers.Dense(100, activation='softmax') ])
     return model
 
-model = vgg_model()
-model.summary()
+# model = vgg_model()
+# model.summary()
 
 # epochs= 5
 # history = model.fit(training_ds, validation_data=validation_ds, epochs=epochs, batch_size = 128, shuffle=True)

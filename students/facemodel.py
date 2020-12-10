@@ -26,8 +26,5 @@ def create_model():
     model.add(Dense(500, activation="relu"))
     model.add(Dropout(0.25)),
     model.add(Dense(500, activation="relu"))
-    model.add(Dense(1001))
+    model.add(Dense(1000))
     return model
-
-model = create_model()
-model.summary()
