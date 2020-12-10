@@ -35,6 +35,13 @@ def create_model():
     )
     return model
 
+def preprocess(dataset, batch_size, shuffle_buffer_size, input_shape=[224,224], num_classes=1000):
+    dataset.map(lambda x: (x['image'], x['label'])
+          ).map(lambda x, y: (tf.image.resize(x, input_shape, method='nearest'),y)
+          ).map(lambda x, y: (tf.cast(x, tf.float32) / 255.0, tf.one_hot(y, num_classes))
+          ).shuffle(batch_size
+          ).batch(shuffle_buffer_size)
+
 class Distiller(keras.Model):
     """Distiller example from https://keras.io/examples/vision/knowledge_distillation/"""
     def __init__(self, student, teacher):
